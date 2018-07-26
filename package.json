@@ -1,0 +1,21 @@
+{
+  "name": "speakeasy-2fa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "hbs": "^4.0.1",
+    "import-env": "^1.1.1",
+    "nodemon": "^1.18.3",
+    "pg-promise": "^8.4.5",
+    "speakeasy": "^2.0.0"
+  }
+}
