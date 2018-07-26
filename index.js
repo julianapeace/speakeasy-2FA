@@ -35,22 +35,19 @@ db.none('INSERT INTO secrets(secret)' + 'VALUES($1)', secret.base32)
 
 var QRCode = require('qrcode');
 
-// QR.toDataURL provides an image data URI that can be used for the img src attribute
-// QRCode.todataurl(secret.otpauth_url, function(err, image_data) {
-//   console.log(image_data)
-// })
-
 app.use(body_parser.urlencoded({extended: false}));
 app.set('view engine', 'hbs');
 app.use(express.static('public'));
 
+
 app.get('/', function(req, res){
-  QRCode.toDataURL('I am a pony!', function (err, url) {
+  QRCode.toDataURL(secret.otpauth_url, function (err, url) {
     if (err) throw err
     response = url
     res.render('index.hbs', {'response':response});
   })
 });
+
 
 app.listen(port, function(){
   console.log('listening on port ' + port)
