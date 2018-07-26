@@ -40,15 +40,42 @@ app.set('view engine', 'hbs');
 app.use(express.static('public'));
 
 
-app.get('/', function(req, res){
+app.get('/', function(req, res) {
   QRCode.toDataURL(secret.otpauth_url, function (err, url) {
     if (err) throw err
     response = url
-    res.render('index.hbs', {'response':response});
+    res.render('index.hbs', { 'response':response });
   })
 });
 
 
+app.get('/authenticator', function(req, res) {
+  res.render('authenticator.hbs', { 'response': response });
+})
+
+
+app.post('/code', function(req, res) {
+  db.any('SELECT * FROM secrets ORDER BY ID DESC LIMIT 1')
+    .then(result => {
+      console.log('Latest Secret: ', result[0].secret)
+      var secret = result[0].secret
+      var token = speakeasy.totp({
+        secret: secret,
+        encoding: 'base32'
+      });
+      console.log('Token: ', token)
+      console.log('Code Submitted', req.body.code)
+      if (req.body.code == token) {
+        console.log('Authenticated!!!')
+      } else {
+        console.log('Authentication failed')
+      }
+    })
+    .catch(err =>{
+      console.log(err)
+    })
+})
+
 app.listen(port, function(){
-  console.log('listening on port ' + port)
+  console.log( 'listening on port ' + port )
 });
