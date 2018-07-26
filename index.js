@@ -67,14 +67,20 @@ app.post('/code', function(req, res) {
       console.log('Code Submitted', req.body.code)
       if (req.body.code == token) {
         console.log('Authenticated!!!')
+        // var string = encodeURIComponent('something that would break');
+        response = "Authenticated!!!"
+        res.render('entry.hbs', { 'response': response });
       } else {
         console.log('Authentication failed')
+        response = "Authentication Failed"
+        res.render('entry.hbs', { 'response': response });
       }
     })
     .catch(err =>{
       console.log(err)
     })
 })
+
 
 app.listen(port, function(){
   console.log( 'listening on port ' + port )
