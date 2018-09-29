@@ -6,3 +6,6 @@
 - PostgreSQL
 ------
 Article: https://davidwalsh.name/2fa
+
+### to add:
+- a retry button
